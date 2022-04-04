@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 prob = 0;
             }
 
-            double sign = 1.0 - pValue;
+            double sign = 0.05;
 
             double tot1 = val1 + val3;
             double tot2 = val2 + val4;
