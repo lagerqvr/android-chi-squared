@@ -65,11 +65,25 @@ public class MainActivity extends AppCompatActivity {
             welcomeField = findViewById(R.id.textView6);
             welcomeMessage = sharedPref.getBoolean("welcomeMsg", true);
 
+            val1 = sharedPref.getInt("s1", 0);
+            val2 = sharedPref.getInt("s2", 0);
+            val3 = sharedPref.getInt("s3", 0);
+            val4 = sharedPref.getInt("s4", 0);
+
+            btn1.setText(String.valueOf(sharedPref.getInt("s1", 0)));
+            btn2.setText(String.valueOf(sharedPref.getInt("s2", 0)));
+            btn3.setText(String.valueOf(sharedPref.getInt("s3", 0)));
+            btn4.setText(String.valueOf(sharedPref.getInt("s4", 0)));
+
+            if (val1 > 0) {
+                calculate();
+            }
+
             if (welcomeMessage == true) {
                 if (welcome <= 0) {
                     welcomeField.setText("Welcome! It's your first time here!");
                 } else {
-                    welcomeField.setText(String.format("Welcome back " + val1 + "! You have visited %d times. ", welcome));
+                    welcomeField.setText(String.format("Welcome back! You have opened this app %d times. ", welcome));
                 }
             } else {
                 welcomeField.setVisibility(View.INVISIBLE);
@@ -112,6 +126,12 @@ public class MainActivity extends AppCompatActivity {
         btn3.setText(String.valueOf(val3));
         btn4.setText(String.valueOf(val4));
 
+        prefEditor.putInt("s1", val1);
+        prefEditor.putInt("s2", val2);
+        prefEditor.putInt("s3", val3);
+        prefEditor.putInt("s4", val4);
+        prefEditor.commit();
+
         textPercentage.setText("");
         textPercentage2.setText("");
         statsField.setText("");
@@ -123,10 +143,16 @@ public class MainActivity extends AppCompatActivity {
     public void calculate() {
         try {
             // Uppdatera knapparna med de nuvarande värdena
-            btn1.setText(String.valueOf(val1));
-            btn2.setText(String.valueOf(val2));
-            btn3.setText(String.valueOf(val3));
-            btn4.setText(String.valueOf(val4));
+            prefEditor.putInt("s1", val1);
+            prefEditor.putInt("s2", val2);
+            prefEditor.putInt("s3", val3);
+            prefEditor.putInt("s4", val4);
+            prefEditor.commit();
+
+            btn1.setText(String.valueOf(sharedPref.getInt("s1", 0)));
+            btn2.setText(String.valueOf(sharedPref.getInt("s2", 0)));
+            btn3.setText(String.valueOf(sharedPref.getInt("s3", 0)));
+            btn4.setText(String.valueOf(sharedPref.getInt("s4", 0)));
 
             // Mata in värdena i Chi-2-uträkningen och ta emot resultatet
             // i en Double-variabel
@@ -146,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
             String childP = String.format(": %.1f", p1);
             String adultP = String.format(": %.1f", p2);
-            String statsF = String.format("Chi-2 result: %.2f\nSignificance: %.2f\nP-value: %.3f\n\nConfidence level: %s",
+            String statsF = String.format("Chi-2 result: %.2f\nSignificance: %.2f\nP-value: %.3f\n\nThe result is with the probability of %s not dependant.",
             chi2, sign, pValue, prob
             );
 

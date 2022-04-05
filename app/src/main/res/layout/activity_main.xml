@@ -156,10 +156,10 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="293dp"
-        android:layout_height="33dp"
+        android:layout_width="347dp"
+        android:layout_height="31dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="56dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/share_rounded_corner_with_border"
         android:backgroundTint="#8D4ACF2D"
         android:gravity="center"
