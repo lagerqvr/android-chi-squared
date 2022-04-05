@@ -2,7 +2,10 @@ package fi.arcada.projekt_chi2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,26 +15,69 @@ public class MainActivity extends AppCompatActivity {
     // Deklarera 4 Button-objekt
     Button btn1, btn2, btn3, btn4;
     // Deklarera 4 heltalsvariabler för knapparnas värden
-    double val1, val2, val3, val4;
+    int val1, val2, val3, val4;
+
     // TextView
-    TextView textPercentage, textPercentage2, statsField;
-
-
+    TextView textPercentage, textPercentage2, statsField, welcomeField, textViewCol1, textViewCol2, textViewRow1, textViewRow2, textExtra;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor prefEditor;
+    int welcome = 0;
+    boolean welcomeMessage;
+    String col1, col2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Koppla samman Button-objekten med knapparna i layouten
-        btn1 = findViewById(R.id.button1);
-        btn2 = findViewById(R.id.button2);
-        btn3 = findViewById(R.id.button3);
-        btn4 = findViewById(R.id.button4);
+        try {
+            // Koppla samman Button-objekten med knapparna i layouten
+            btn1 = findViewById(R.id.button1);
+            btn2 = findViewById(R.id.button2);
+            btn3 = findViewById(R.id.button3);
+            btn4 = findViewById(R.id.button4);
 
-        textPercentage = findViewById(R.id.textView3);
-        textPercentage2 = findViewById(R.id.textView4);
-        statsField = findViewById(R.id.textView5);
+            textViewCol1 = findViewById(R.id.textViewCol1);
+            textViewCol2 = findViewById(R.id.textViewCol2);
+            textViewRow1 = findViewById(R.id.textViewRow1);
+            textViewRow2 = findViewById(R.id.textViewRow2);
+            textExtra = findViewById(R.id.textView2);
+
+            textPercentage = findViewById(R.id.textView3);
+            textPercentage2 = findViewById(R.id.textView4);
+            statsField = findViewById(R.id.textView5);
+            sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+            prefEditor = sharedPref.edit();
+            prefEditor.putInt("welcome", sharedPref.getInt("welcome", 0)+1);
+            prefEditor.apply();
+
+            col1 = sharedPref.getString("col1", "Children");
+            col2 = sharedPref.getString("col2", "Adults");
+            textViewCol1.setText(col1);
+            textViewCol2.setText(col2);
+            textViewRow1.setText(sharedPref.getString("row1", "Excercise regularly"));
+            textViewRow2.setText(sharedPref.getString("row2", "Don't excercise regularly"));
+            textExtra.setText(sharedPref.getString("row1", "Excercise regularly"));
+
+            welcome = sharedPref.getInt("welcome", 0);
+
+            welcomeField = findViewById(R.id.textView6);
+            welcomeMessage = sharedPref.getBoolean("welcomeMsg", true);
+
+            if (welcomeMessage == true) {
+                if (welcome <= 0) {
+                    welcomeField.setText("Welcome! It's your first time here!");
+                } else {
+                    welcomeField.setText(String.format("Welcome back " + val1 + "! You have visited %d times. ", welcome));
+                }
+            } else {
+                welcomeField.setVisibility(View.INVISIBLE);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -52,6 +98,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Slutligen, kör metoden som ska räkna ut allt!
         calculate();
+    }
+
+    public void settingsClick(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     public void buttonClear(View view) {
@@ -84,26 +135,23 @@ public class MainActivity extends AppCompatActivity {
             // Mata in chi2-resultatet i getP() och ta emot p-värdet
             double pValue = Significance.getP(chi2);
 
-            double prob = 100 - (pValue * 100);
-            if (prob < 50) {
-                prob = 0;
-            }
+            String prob = (100 - (pValue * 100)) + "%";
 
-            double sign = 0.05;
+            double sign = Double.parseDouble(sharedPref.getString("significance", "0.05"));
 
             double tot1 = val1 + val3;
             double tot2 = val2 + val4;
-            double p1 = val1/tot1 * 100;
-            double p2 = val2/tot2 * 100;
+            double p1 = Math.round(val1/tot1 * 100);
+            double p2 = Math.round(val2/tot2 * 100);
 
-            String childP = String.format("Children: %.1f", p1);
-            String adultP = String.format("Adults: %.1f", p2);
-            String statsF = String.format("Chi-2 result: %.2f\nSignificance: %.2f\nP-value: %.3f\n\nConfidence level: %.1f",
+            String childP = String.format(": %.1f", p1);
+            String adultP = String.format(": %.1f", p2);
+            String statsF = String.format("Chi-2 result: %.2f\nSignificance: %.2f\nP-value: %.3f\n\nConfidence level: %s",
             chi2, sign, pValue, prob
             );
 
-            textPercentage.setText(childP + "%");
-            textPercentage2.setText(adultP + "%");
+            textPercentage.setText(col1 + childP + "%");
+            textPercentage2.setText(col2 + adultP + "%");
             statsField.setText(statsF);
 
             /**

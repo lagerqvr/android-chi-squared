@@ -1,0 +1,40 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="General">
+
+        <SwitchPreferenceCompat
+            app:key="welcomeMsg"
+            app:title="Show welcome message" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="App">
+
+        <EditTextPreference
+            app:key="col1"
+            app:title="Text: Column 1"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="col2"
+            app:title="Text: Column 2"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="row1"
+            app:title="Text: Row 1"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="row2"
+            app:title="Text: Row 2"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="significance"
+            app:title="Significance"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

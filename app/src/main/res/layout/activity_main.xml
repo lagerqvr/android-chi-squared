@@ -35,15 +35,13 @@
                 android:layout_width="match_parent"
                 android:layout_column="1"
                 android:layout_marginLeft="15dp"
-                android:layout_marginBottom="4dp"
-                android:text="Children" />
+                android:layout_marginBottom="4dp" />
 
             <TextView
                 android:id="@+id/textViewCol2"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="15dp"
-                android:layout_marginBottom="4dp"
-                android:text="Adults" />
+                android:layout_marginBottom="4dp" />
 
         </TableRow>
 
@@ -55,8 +53,7 @@
                 android:id="@+id/textViewRow1"
                 android:layout_width="92dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="4dp"
-                android:text="Excercise regularly" />
+                android:layout_marginBottom="4dp" />
 
             <Button
                 android:id="@+id/button1"
@@ -85,8 +82,7 @@
                 android:layout_width="67dp"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="4dp"
-                android:rotationX="-2"
-                android:text="Don't excercise regularly" />
+                android:rotationX="-2" />
 
             <Button
                 android:id="@+id/button3"
@@ -125,7 +121,6 @@
         android:layout_height="41dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        android:text="Excercise regularly"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
@@ -158,5 +153,35 @@
         android:layout_marginTop="64dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="293dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="56dp"
+        android:background="@drawable/share_rounded_corner_with_border"
+        android:backgroundTint="#8D4ACF2D"
+        android:gravity="center"
+        android:lineSpacingExtra="8sp"
+        android:padding="2dp"
+        android:text="100"
+        android:textAlignment="center"
+        android:textColor="#4C4C4C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:onClick="settingsClick"
+        app:backgroundTint="#B6B6B6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_manage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SoSProjekt">
         <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="Settings"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
